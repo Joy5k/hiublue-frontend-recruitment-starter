@@ -35,7 +35,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" ,maxWidth: "250px",}}>
       {/* AppBar should be visible only on small and medium screens */}
       {!isMdUp && (
         <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
