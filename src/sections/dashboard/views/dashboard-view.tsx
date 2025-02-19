@@ -3,7 +3,8 @@
 
 import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect
+ } from "react";
 import Sidebar from "../sidebar/Sidebar";
 
 
@@ -14,17 +15,13 @@ useEffect(() => {
   
   const storedToken = localStorage.getItem('token');
     if (!storedToken) {
-      router.push('/login'); // Redirect to login if not authenticated
+      router.push('/login'); 
 
     }  
 }, []);
 
   return <Box>
-    <div style={{ display: "flex" }}>
       <Sidebar  />
-      <div style={{ flex: 1, padding: "20px" }}>
-       
-      </div>
-    </div>
+   
   </Box>;
 }
