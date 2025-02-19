@@ -22,10 +22,10 @@ const StatCard = ({ searchQuery }: { searchQuery: string }) => {
         clicks: 0,
         appearance: 0,
       });
-      const [mainData, setMainData] = useState<IMainData | null>(null); // Initialize as null
-      const [showPercentage, setShowPercentage] = useState<DataStatus | null>(null); // Initialize as null
+      const [mainData, setMainData] = useState<IMainData | null>(null); 
+      const [showPercentage, setShowPercentage] = useState<DataStatus | null>(null); 
     
-    
+      // fetching data from the API
       const fetchData = async () => {
         try {
           const token = localStorage.getItem("token");
@@ -55,6 +55,7 @@ const StatCard = ({ searchQuery }: { searchQuery: string }) => {
         fetchData();
       }, [searchQuery]);
     
+    // calculating the percentage for clicks ,Users and appearance
       useEffect(() => {
         // Calculate percentages only when mainData changes (and is not null)
         if (mainData) {
@@ -81,59 +82,108 @@ const StatCard = ({ searchQuery }: { searchQuery: string }) => {
       if (!showPercentage) {
         return <div>Loading...</div>; 
       }
-      console.log(showPercentage)
   return (
     <Card>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 2 }}>
-        {/* Active Users */}
-        <Box sx={{ width: "280px", border: "1px solid #E5E5E5", borderRadius: "8px", padding: "16px" }}>
-          <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
-            Total Active Users
-          </Typography>
-          <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
-            {formatNumber(data.active_users)}
-          </Typography>
-          <Typography
-            component="p"
-            sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}
-          >
-            {showPercentage.active_users >0 ? <TrendingUpIcon sx={{ color: "#22c55e" }} /> :<TrendingDown sx={{color:"red"}}></TrendingDown>}  <Typography component="span" sx={{fontWeight:"700", fontSize:"10px" ,marginRight:"5px"}}>{showPercentage.active_users}%</Typography> Previous month
-          </Typography>
-        </Box>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 2,
+      
+      gap: 2,
+      "@media (max-width: 700px)": {
+        flexDirection: "column",
+        alignItems: "center",
+      },
+    }}
+  >
+    {/* Active Users */}
+    <Box
+      sx={{
+        width: "280px",
+        border: "1px solid #E5E5E5",
+        borderRadius: "8px",
+        padding: "16px",
+      }}
+    >
+      <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
+        Total Active Users
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
+        {formatNumber(data.active_users)}
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}>
+        {showPercentage.active_users > 0 ? (
+          <TrendingUpIcon sx={{ color: "#22c55e" }} />
+        ) : (
+          <TrendingDown sx={{ color: "red" }} />
+        )}
+        <Typography component="span" sx={{ fontWeight: "700", fontSize: "10px", marginRight: "5px" }}>
+          {showPercentage.active_users}%
+        </Typography>
+        Previous month
+      </Typography>
+    </Box>
 
-        {/* Clicks */}
-        <Box sx={{ width: "280px", border: "1px solid #E5E5E5", borderRadius: "8px", padding: "16px" }}>
-          <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
-            Total Clicks
-          </Typography>
-          <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
-            {formatNumber(data.clicks)}
-          </Typography>
-          <Typography
-            component="p"
-            sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}
-          >
-            {showPercentage.clicks >0 ? <TrendingUpIcon sx={{ color: "#22c55e" }} /> :<TrendingDown sx={{color:"red"}}></TrendingDown>}  <Typography component="span" sx={{fontWeight:"700", fontSize:"10px" ,marginRight:"5px"}}>{showPercentage.clicks}%</Typography> Previous month
-          </Typography>
-        </Box>
+    {/* Clicks */}
+    <Box
+      sx={{
+        width: "280px",
+        border: "1px solid #E5E5E5",
+        borderRadius: "8px",
+        padding: "16px",
+      }}
+    >
+      <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
+        Total Clicks
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
+        {formatNumber(data.clicks)}
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}>
+        {showPercentage.clicks > 0 ? (
+          <TrendingUpIcon sx={{ color: "#22c55e" }} />
+        ) : (
+          <TrendingDown sx={{ color: "red" }} />
+        )}
+        <Typography component="span" sx={{ fontWeight: "700", fontSize: "10px", marginRight: "5px" }}>
+          {showPercentage.clicks}%
+        </Typography>
+        Previous month
+      </Typography>
+    </Box>
 
-        {/* Appearance */}
-        <Box sx={{ width: "280px", border: "1px solid #E5E5E5", borderRadius: "8px", padding: "16px" }}>
-          <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
-            Total Appearance
-          </Typography>
-          <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
-            {formatNumber(data.appearance)}
-          </Typography>
-          <Typography
-            component="p"
-            sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}
-          >
-             {showPercentage.appearance >0 ? <TrendingUpIcon sx={{ color: "#22c55e" }} /> :<TrendingDown sx={{color:"red"}}></TrendingDown>}  <Typography component="span" sx={{fontWeight:"700", fontSize:"10px" ,marginRight:"5px"}}>{showPercentage.appearance}%</Typography>Previous month
-          </Typography>
-        </Box>
-      </Box>
-    </Card>
+    {/* Appearance */}
+    <Box
+      sx={{
+        width: "280px",
+        border: "1px solid #E5E5E5",
+        borderRadius: "8px",
+        padding: "16px",
+      }}
+    >
+      <Typography component="h3" sx={{ fontSize: "13px", fontWeight: "600", color: "#1C252E", lineHeight: "22px" }}>
+        Total Appearance
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "20px", fontWeight: "700", lineHeight: "40px" }}>
+        {formatNumber(data.appearance)}
+      </Typography>
+      <Typography component="p" sx={{ fontSize: "10px", fontWeight: "400", display: "flex", alignItems: "center" }}>
+        {showPercentage.appearance > 0 ? (
+          <TrendingUpIcon sx={{ color: "#22c55e" }} />
+        ) : (
+          <TrendingDown sx={{ color: "red" }} />
+        )}
+        <Typography component="span" sx={{ fontWeight: "700", fontSize: "10px", marginRight: "5px" }}>
+          {showPercentage.appearance}%
+        </Typography>
+        Previous month
+      </Typography>
+    </Box>
+  </Box>
+</Card>
+
   );
 };
 
