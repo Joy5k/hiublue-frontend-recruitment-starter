@@ -5,6 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
 import { useState } from "react";
 import StatCard from "../dashboarComponents/StatCart";
 import ApexChart from "../dashboarComponents/ApexChart";
+import OfferTable from "../dashboarComponents/OfferTable";
 
 
 
@@ -44,6 +45,9 @@ const DashboardPage = () => {
       {/* Apex Chart */}
       <Box sx={{ mt: 4 }}>
       <ApexChart searchQuery={searchQuery}></ApexChart>
+      </Box>
+      <Box>
+        <OfferTable></OfferTable>
       </Box>
     </Box>
   );
