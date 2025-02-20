@@ -29,7 +29,7 @@ const CreateOffer = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isSubmitted, isLoading, isValid },
+    formState: { errors, isLoading },
     watch,
   } = useForm<OfferData>({ mode: "onChange" });
 
@@ -40,8 +40,8 @@ const CreateOffer = () => {
     formValues.plan_type &&
     formValues.price &&
     selectedUser 
-  // Fetch users based on the search input
-  const fetchUsers = async (search: string) => {
+
+    const fetchUsers = async (search: string) => {
     const token = localStorage.getItem("token");
 
     if (!search) {

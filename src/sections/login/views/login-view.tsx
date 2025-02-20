@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
-import { useState, FormEvent } from 'react';
+import  React from 'react';
+import { useState,useEffect, FormEvent } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -66,14 +66,14 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function SignIn() {
     const [err, setErr] = useState('');
     const router=useRouter();
-   React.useEffect(() => {
+   useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
             router.push('/'); // Redirect only if token exists on mount
         }
     }, [router])
     // Local state for form fields
-    const [email, setEmail] =React.useState('');
+    const [email, setEmail] =useState('');
     const [password, setPassword] =useState('');
     const [errors, setErrors] =useState<{ email?: string; password?: string }>({});
 
