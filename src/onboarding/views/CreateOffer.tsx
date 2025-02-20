@@ -18,21 +18,16 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
+import { OfferData } from "@/zodValidations";
 
-type OfferData = {
-  plan_type: string;
-  additions: string[];
-  user_id: string;
-  expired: string;
-  price: number;
-};
+
 
 const CreateOffer = () => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [users, setUsers] = useState<any[]>([]);
   const token = localStorage.getItem("token");
-  // Set up react-hook-form
+
   const {
     handleSubmit,
     control,
@@ -74,10 +69,8 @@ const CreateOffer = () => {
 
   const handleFormSubmit = async (data: OfferData) => {
   
-    // Ensure 'additions' is an array of selected values
     const additions = [];
     if (Array.isArray(data.additions)) {
-      // Check each addition if it's true, add it to the array
       if (data.additions.includes("refundable")) additions.push("refundable");
       if (data.additions.includes("on_demand")) additions.push("on_demand");
       if (data.additions.includes("negotiable")) additions.push("negotiable");
@@ -86,7 +79,7 @@ const CreateOffer = () => {
       plan_type: data.plan_type,
       additions: additions, 
       user_id: selectedUser?.id, 
-      expired: data.expired ? new Date(data.expired).toISOString().split("T")[0] : new Date().toISOString().split("T")[0], 
+      expired: data.expired ? new Date(data.expired).toISOString().split("T")[0] : new Date(data.expired).toISOString().split("T")[0], 
       price: Number(data.price), 
     };
   
@@ -255,7 +248,7 @@ const CreateOffer = () => {
 
             {/* Expiry Date */}
             <Controller
-  name="expired"
+              name="expired"
   control={control}
   render={({ field }) => (
     <DesktopDatePicker
@@ -269,8 +262,8 @@ const CreateOffer = () => {
       }}
       slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
     />
-  )}
-/>
+              )}
+            />
 
 
             {/* Price */}

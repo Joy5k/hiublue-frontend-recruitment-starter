@@ -14,3 +14,10 @@ export const offerSchema = z.object({
   expired: z.date(),
   price: z.number().min(0),
 });
+export type OfferData = {
+  plan_type: string;
+  additions: string[];
+  user_id: string;
+  expired: string;
+  price: number;
+};
