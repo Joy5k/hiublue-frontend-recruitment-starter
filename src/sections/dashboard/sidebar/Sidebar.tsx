@@ -18,7 +18,7 @@ import Image from "next/image";
 
 // Lazy load pages
 const DashboardPage = lazy(() => import("../views/DashboarderOverview"));
-const OnboardingPage = lazy(() => import("@/onboarding/views/page"));
+const OnboardingPage = lazy(() => import("@/onboarding/views/CreateOffer"));
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -35,7 +35,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" ,maxWidth: "250px",}}>
+    <Box sx={{ display: "flex", minHeight: "100vh" ,maxWidth: "100%",}}>
       {/* AppBar should be visible only on small and medium screens */}
       {!isMdUp && (
         <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
@@ -49,14 +49,7 @@ const Sidebar = () => {
             >
               <Menu />
             </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, color: "black", textAlign: "center" }}
-            >
-              Spare Room
-            </Typography>
+         
           </Toolbar>
         </AppBar>
       )}
@@ -120,21 +113,24 @@ const Sidebar = () => {
         </List>
       </Drawer>
 
-      {/* Main Content */}
       <main
-        style={{
-          flexGrow: 1,
-          padding: "20px",
-          marginLeft: isMdUp ? 240 : 0,
-          transition: "margin 0.3s ease-in-out",
-          marginTop: isMdUp ? 0 : "64px",
-        }}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          {selectedPage === "dashboard" && <DashboardPage />}
-          {selectedPage === "onboarding" && <OnboardingPage />}
-        </Suspense>
-      </main>
+  style={{
+    flexGrow: 1,
+    padding: "20px",
+    marginLeft: isMdUp ? 240 : 0,
+    transition: "margin 0.3s ease-in-out",
+    marginTop: isMdUp ? 0 : "64px",
+    display: "flex",
+    justifyContent: "center", // Centers child components horizontally
+    alignItems: "center", // Centers child components vertically (optional)
+  }}
+>
+  <Suspense fallback={<div>Loading...</div>}>
+    {selectedPage === "dashboard" && <DashboardPage />}
+    {selectedPage === "onboarding" && <OnboardingPage />}
+  </Suspense>
+</main>
+
     </Box>
   );
 };

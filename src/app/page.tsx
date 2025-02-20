@@ -1,3 +1,4 @@
+import CreateOffer from "@/onboarding/views/CreateOffer";
 import DashboardView from "@/sections/dashboard/views/dashboard-view";
 import { AppBar, Avatar, Box, IconButton, Toolbar } from "@mui/material";
 import Image from "next/image";

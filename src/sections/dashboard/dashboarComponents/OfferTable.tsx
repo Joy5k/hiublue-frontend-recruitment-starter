@@ -28,36 +28,50 @@ import { IOffer } from "@/types";
 
 const OfferTable = () => {
   const [data, setData] = useState<IOffer[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState<keyof IOffer>("user_name");
   const [typeFilter, setTypeFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const fetchData = async () => {
+    const token = localStorage.getItem("token");
+
     try {
       const response = await fetch(
-        `https://dummy-1.hiublue.com/api/offers?page=${page + 1}&per_page=${rowsPerPage}`,
+        `https://dummy-1.hiublue.com/api/offers?page=${page+1}&per_page=${rowsPerPage}`,
         {
           method: "GET",
           headers: {
-            Authorization: "Bearer fake-jwt-token",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       if (!response.ok) throw new Error("Network response was not ok");
       const data = await response.json();
-      setData(data.data);
+  
+      if (data.data.length === 0 && page > 0) {
+        setPage((prev) => Math.max(0, prev - 1));
+      } else {
+        setData(data.data);
+        setTotalPages(data.meta.last_page); 
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
+  
   useEffect(() => {
     fetchData();
   }, [page, rowsPerPage]);
 
+
+
+
+  
   const filteredData = data.filter((offer) => {
     const searchTerm = search.toLowerCase();
     const fieldValue = String(offer[searchField]).toLowerCase();
@@ -69,8 +83,12 @@ const OfferTable = () => {
   });
 
   const handlePageChange = (_event: unknown, newPage: number) => {
-    setPage(newPage);
+    if (newPage < totalPages) {
+      console.log(newPage);
+      setPage(newPage);
+    }
   };
+  
 
   const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -89,7 +107,9 @@ const OfferTable = () => {
         return "default";
     }
   };
-
+if(!data){
+  return <div>Loading...</div>
+}
   return (
     <Paper sx={{ maxWidth: 900, margin: "auto", padding: 2 ,marginTop:"20px"}}>
         <Typography component="h4" sx={{fontWeight:"700",margin:"10px 0",fontSize:20,}}>Offer Lists</Typography>
@@ -229,16 +249,18 @@ const OfferTable = () => {
           </Table>
         </TableContainer>
       </div>
-
       <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
-        component="div"
-        count={filteredData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsPerPageChange}
-      />
+  rowsPerPageOptions={[5, 10, 15,20,25,30,40,50]}
+  component="div"
+  count={totalPages * rowsPerPage} 
+  page={page}
+  onPageChange={handlePageChange}
+  rowsPerPage={rowsPerPage}
+  onRowsPerPageChange={(event) => setRowsPerPage(parseInt(event.target.value, 10))}
+  nextIconButtonProps={{ disabled: page >= totalPages - 1 }} 
+/>
+
+
     </Paper>
   );
 };
