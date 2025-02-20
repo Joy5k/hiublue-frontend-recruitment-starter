@@ -1,5 +1,6 @@
-# Visit the site
-[![hiuble](https://hiuble-dashboard.vercel.app/favicon.ico)](https://hiuble-dashboard.vercel.app)
+# Visit the site: [hiuble-dashboard](https://hiuble-dashboard.vercel.app)
+[hiuble-dashboard](https://hiuble-dashboard.vercel.app)
+
 
 
 ## Login credential 
