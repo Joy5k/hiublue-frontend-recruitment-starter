@@ -1,3 +1,15 @@
+# Visit the site
+[![hiuble](https://hiuble-dashboard.vercel.app/favicon.ico)](https://hiuble-dashboard.vercel.app)
+
+
+## Login credential 
+```
+email: test@example.com
+password: password123
+```
+
+
+
 # Hiublue Frontend Recruitment Starter
 
 Welcome to the Hiublue Frontend Recruitment Starter project! This repository is designed to help you get started with the frontend development tasks for the Hiublue recruitment process.
