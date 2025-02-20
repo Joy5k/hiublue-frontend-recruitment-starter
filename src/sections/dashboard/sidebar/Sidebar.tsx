@@ -36,7 +36,6 @@ const Sidebar = () => {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" ,maxWidth: "100%",}}>
-      {/* AppBar should be visible only on small and medium screens */}
       {!isMdUp && (
         <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
           <Toolbar>
@@ -45,7 +44,7 @@ const Sidebar = () => {
               aria-label="open drawer"
               edge="start"
               onClick={handleMenuClick}
-              sx={{ color: "black" }} // Ensure color is visible
+              sx={{ color: "black" }}
             >
               <Menu />
             </IconButton>
@@ -64,7 +63,7 @@ const Sidebar = () => {
           "& .MuiDrawer-paper": {
             width: 240,
             boxSizing: "border-box",
-            ...(isMdUp ? {} : { top: isSmDown ? "56px" : "64px" }), // Adjust top margin for mobile
+            ...(isMdUp ? {} : { top: isSmDown ? "56px" : "64px" }),
           },
         }}
       >
@@ -121,8 +120,8 @@ const Sidebar = () => {
     transition: "margin 0.3s ease-in-out",
     marginTop: isMdUp ? 0 : "64px",
     display: "flex",
-    justifyContent: "center", // Centers child components horizontally
-    alignItems: "center", // Centers child components vertically (optional)
+    justifyContent: "center", 
+    alignItems: "center",
   }}
 >
   <Suspense fallback={<div>Loading...</div>}>

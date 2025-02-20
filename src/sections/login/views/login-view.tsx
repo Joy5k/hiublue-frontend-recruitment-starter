@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useState, FormEvent } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -63,20 +64,21 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 
 export default function SignIn() {
+    const [err, setErr] = useState('');
     const router=useRouter();
-    React.useEffect(() => {
+   React.useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
             router.push('/'); // Redirect only if token exists on mount
         }
     }, [router])
     // Local state for form fields
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [errors, setErrors] = React.useState<{ email?: string; password?: string }>({});
+    const [email, setEmail] =React.useState('');
+    const [password, setPassword] =useState('');
+    const [errors, setErrors] =useState<{ email?: string; password?: string }>({});
 
     // Handle form submission
-    const handleSubmit = async(e: React.FormEvent) => {
+    const handleSubmit = async(e:FormEvent) => {
         e.preventDefault();
 
         // Validate inputs using Zod schema
@@ -100,7 +102,7 @@ export default function SignIn() {
                     body: JSON.stringify({ email, password }),
                 });
                 if (!response.ok) {
-                  throw new Error('Failed to fetch items');
+                  setErr("Invalid email or password");
                 }
                 const data = await response.json();
 
@@ -175,6 +177,9 @@ export default function SignIn() {
                                 error={!!errors.password}
                                 helperText={errors.password}
                             />
+                            <Typography component='p' sx={{color:'red'}}>
+                                {err}
+                            </Typography>
                         </FormControl>
 
                         {/* Remember Me Checkbox */}
