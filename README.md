@@ -12,9 +12,18 @@ Welcome to the Hiublue Frontend Recruitment Starter project! This repository is 
 - [Contributing](#contributing)
 - [License](#license)
 
+
+ ## Project Performance
+
+![Performance](https://i.ibb.co.com/My435rdw/Screenshot-2025-02-20-144332.png)
+
+
+
 ## Project Overview
 
-This project serves as a starting point for frontend development tasks. It includes a basic setup with essential tools and configurations to streamline the development process.
+This project serves as a starting point for front-end development tasks. It includes a basic setup with essential tools and configurations to streamline the development process.
+
+
 
 ## Getting Started
 
