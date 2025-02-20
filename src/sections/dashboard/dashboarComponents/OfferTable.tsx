@@ -26,7 +26,7 @@ import { IOffer } from "@/types";
 
 const OfferTable = () => {
   const [data, setData] = useState<IOffer[]>([]);
-  const [totalRecords, setTotalRecords] = useState(0); // Track total number of records
+  const [totalRecords, setTotalRecords] = useState(0); 
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState<keyof IOffer>("user_name");
@@ -189,7 +189,7 @@ const OfferTable = () => {
             </TableHead>
             <TableBody>
               {
-                data
+                filteredData
                 .map((offer) => (
                   <TableRow key={offer.id}>
                     <TableCell>
