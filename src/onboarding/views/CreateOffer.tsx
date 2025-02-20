@@ -20,8 +20,6 @@ import { useForm, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import { OfferData } from "@/zodValidations";
 
-
-
 const CreateOffer = () => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
   const [selectedUser, setSelectedUser] = useState<any>(null);
@@ -31,10 +29,17 @@ const CreateOffer = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isSubmitted, isLoading },
-  } = useForm<OfferData>();
-  console.log({ errors, isLoading, isSubmitted });
+    formState: { errors, isSubmitted, isLoading, isValid },
+    watch,
+  } = useForm<OfferData>({ mode: "onChange" });
 
+  // Watch all fields to ensure all are filled
+  const formValues = watch();
+
+  const isFormValid =
+    formValues.plan_type &&
+    formValues.price &&
+    selectedUser 
   // Fetch users based on the search input
   const fetchUsers = async (search: string) => {
     const token = localStorage.getItem("token");
@@ -45,7 +50,6 @@ const CreateOffer = () => {
     }
 
     try {
-      // API call to search users based on the search term
       const response = await fetch(
         `https://dummy-1.hiublue.com/api/users?search=${search}`,
         {
@@ -68,7 +72,6 @@ const CreateOffer = () => {
   };
 
   const handleFormSubmit = async (data: OfferData) => {
-  
     const additions = [];
     if (Array.isArray(data.additions)) {
       if (data.additions.includes("refundable")) additions.push("refundable");
@@ -77,24 +80,26 @@ const CreateOffer = () => {
     }
     const offerData = {
       plan_type: data.plan_type,
-      additions: additions, 
-      user_id: selectedUser?.id, 
-      expired: data.expired ? new Date(data.expired).toISOString().split("T")[0] : new Date(data.expired).toISOString().split("T")[0], 
-      price: Number(data.price), 
+      additions: additions,
+      user_id: selectedUser?.id,
+      expired: data.expired
+        ? new Date(data.expired).toISOString().split("T")[0]
+        : new Date(data.expired).toISOString().split("T")[0],
+      price: Number(data.price),
     };
-  
+
     console.log("Formatted offer data:", offerData);
-  
+
     try {
       const response = await fetch("https://dummy-1.hiublue.com/api/offers", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(offerData),
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         toast.success("Successfully Created the Offer!");
@@ -109,7 +114,7 @@ const CreateOffer = () => {
       toast.error(errorMessage);
     }
   };
-  
+
   return (
     <Box>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -249,22 +254,21 @@ const CreateOffer = () => {
             {/* Expiry Date */}
             <Controller
               name="expired"
-  control={control}
-  render={({ field }) => (
-    <DesktopDatePicker
-      {...field}
-      label="Expired"
-      format="DD MMM YYYY"
-      value={field.value ? dayjs(field.value) : selectedDate}  
-      onChange={(date) => {
-        setSelectedDate(date);
-        field.onChange(date); 
-      }}
-      slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
-    />
+              control={control}
+              render={({ field }) => (
+                <DesktopDatePicker
+                  {...field}
+                  label="Expired"
+                  format="DD MMM YYYY"
+                  value={field.value ? dayjs(field.value) : selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                    field.onChange(date);
+                  }}
+                  slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
+                />
               )}
             />
-
 
             {/* Price */}
             <Controller
@@ -287,19 +291,19 @@ const CreateOffer = () => {
               )}
             />
 
-            {/* Submit Button */}
             <Button
               type="submit"
               variant="contained"
               sx={{
                 color: "white",
                 "&:hover": { backgroundColor: "#00a76f" },
-                backgroundColor: "black",
+                backgroundColor: !isFormValid || isLoading ? "gray" : "black", // Disable button if form is invalid or loading
                 width: "110px",
                 alignItems: "end",
                 mt: 2,
                 right: 0,
               }}
+              disabled={!isFormValid || isLoading}
             >
               Send Offer
             </Button>

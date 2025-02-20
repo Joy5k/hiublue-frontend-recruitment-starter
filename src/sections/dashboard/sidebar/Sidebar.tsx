@@ -73,7 +73,7 @@ const Sidebar = () => {
           </IconButton>
         </Box>
 
-        <List style={{ margin: "0 0 0 10px" }}>
+        <List style={{ margin: "0 0 0 10px" }} >
           <Typography component="p" style={{ color: "gray", margin: "10px" }}>
             Overview
           </Typography>
