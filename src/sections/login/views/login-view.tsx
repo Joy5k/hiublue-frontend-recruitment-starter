@@ -69,7 +69,7 @@ export default function SignIn() {
    useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            router.push('/'); // Redirect only if token exists on mount
+            router.push('/'); 
         }
     }, [router])
     // Local state for form fields
@@ -197,9 +197,7 @@ export default function SignIn() {
                         <Link
                             component="button"
                             type="button"
-                            onClick={() => {
-                                // Forgot password logic
-                            }}
+                            
                             variant="body2"
                             sx={{ alignSelf: 'center' }}
                         >

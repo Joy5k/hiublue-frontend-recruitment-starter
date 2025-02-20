@@ -22,8 +22,8 @@ const OnboardingPage = lazy(() => import("@/onboarding/views/CreateOffer"));
 
 const Sidebar = () => {
   const theme = useTheme();
-  const isMdUp = useMediaQuery(theme.breakpoints.up("md")); // Check if screen is md or larger
-  const isSmDown = useMediaQuery(theme.breakpoints.down("sm")); // Check if screen is sm or smaller
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md")); 
+  const isSmDown = useMediaQuery(theme.breakpoints.down("sm")); 
 
   const [open, setOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState<"dashboard" | "onboarding">(
